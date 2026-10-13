@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+.venv
+*.egg-info/
+dist/
+build/
+
+# Data and checkpoints
+*.db
+*.sqlite
+quadra_checkpoints.db
+examples/synthetic_trial_100.json
+
+# Certificates and secrets
+certs/
+*.key
+*.crt
+*.pem
+MCP_API_KEY
+
+# Docker / Caddy
+caddy_data/
+caddy_config/
+*.log
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Archives
+*.tar.gz
+*.zip
+
+# Local test outputs
+*.coverage
+htmlcov/
