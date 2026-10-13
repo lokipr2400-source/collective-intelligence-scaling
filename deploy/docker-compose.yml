@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  mcp-server:
+    build: .
+    container_name: quadra-mcp
+    restart: unless-stopped
+    environment:
+      - MCP_API_KEY=${MCP_API_KEY}
+    networks:
+      - quadra-net
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+  caddy:
+    image: caddy:2.9-alpine
+    container_name: quadra-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/certs:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      mcp-server:
+        condition: service_healthy
+    networks:
+      - quadra-net
+networks:
+  quadra-net:
+    driver: bridge
+volumes:
+  caddy_data:
+  caddy_config:
